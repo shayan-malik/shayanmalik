@@ -30,11 +30,11 @@ const code = [
 export default function CaseStudy() {
   return (
     <section id="case-study" className="bg-[var(--card)] border-y border-[var(--line)]">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-6 py-14 md:py-20">
         <SectionHead num="04 — Case Study" title="Avenzo: Atomic Checkout" />
 
         <motion.div
-          className="hidden md:block mt-10 h-px origin-left bg-[var(--accent)]"
+          className="hidden md:block mt-8 h-px origin-left bg-[var(--accent)]"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}

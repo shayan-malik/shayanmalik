@@ -5,7 +5,7 @@ import { projects } from "@/lib/data";
 
 export default function Work() {
   return (
-    <section id="work" className="mx-auto max-w-6xl px-6 py-24">
+    <section id="work" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
       <SectionHead num="02 — Work" title="Selected Work" />
 
       {projects.map((p, i) => {
@@ -14,7 +14,7 @@ export default function Work() {
 
         return (
           <Reveal key={p.title} className="border-b border-[var(--line)] last:border-0">
-            <article className="grid md:grid-cols-12 gap-8 md:gap-12 py-12">
+            <article className="grid md:grid-cols-12 gap-8 md:gap-12 py-8 md:py-10">
               <div className={`md:col-span-7 ${i % 2 ? "md:order-2" : ""}`}>
                 <Tilt>
                   <a

@@ -1,5 +1,7 @@
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { LoaderProvider } from "@/components/LoaderContext";
+import Preloader from "@/components/Preloader";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -23,7 +25,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <style>{`.preloader{display:none!important}`}</style>
+        </noscript>
+        <LoaderProvider>
+          <Preloader />
+          {children}
+        </LoaderProvider>
+      </body>
     </html>
   );
 }

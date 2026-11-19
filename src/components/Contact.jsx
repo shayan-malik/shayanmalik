@@ -31,10 +31,10 @@ export default function Contact() {
 
   return (
     <section id="contact" className="bg-[var(--ink)] text-[var(--bg)]">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-6 py-14 md:py-20">
         <SectionHead num="05 — Contact" title="Contact" />
 
-        <div className="grid md:grid-cols-2 gap-14 mt-10">
+        <div className="grid md:grid-cols-2 gap-14 mt-8">
           <Reveal>
             <h3 className="font-display text-5xl md:text-7xl leading-[1.02]">
               Let&apos;s build something <span className="text-[var(--accent)]">together.</span>

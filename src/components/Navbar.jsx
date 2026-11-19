@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import Magnetic from "./Magnetic";
+import { useReady } from "./LoaderContext";
 
 const links = [
   { id: "about", label: "About" },
@@ -12,6 +13,7 @@ const links = [
 ];
 
 export default function Navbar() {
+  const ready = useReady();
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -44,7 +46,7 @@ export default function Navbar() {
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={ready ? { y: 0, opacity: 1 } : undefined}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
         scrolled || open

@@ -1,7 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
+import { useReady } from "./LoaderContext";
 
 export default function Logo({ size = 38, showText = true }) {
+    const ready = useReady();
   return (
     <span className="inline-flex items-center gap-3">
       <motion.svg
@@ -21,7 +23,7 @@ export default function Logo({ size = 38, showText = true }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
+          animate={{ pathLength: ready ? 1 : 0 }}
           transition={{ duration: 1.1, ease: "easeInOut", delay: 0.2 }}
         />
         <motion.circle
@@ -30,7 +32,7 @@ export default function Logo({ size = 38, showText = true }) {
           r="1.8"
           style={{ fill: "var(--accent)", transformBox: "fill-box", transformOrigin: "center" }}
           initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          animate={{ scale: ready ? 1 : 0 }}
           transition={{ delay: 1.1, type: "spring", stiffness: 400, damping: 12 }}
         />
       </motion.svg>

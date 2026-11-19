@@ -6,9 +6,9 @@ import { skills } from "@/lib/data";
 
 export default function Skills() {
   return (
-    <section id="skills" className="mx-auto max-w-6xl px-6 py-24">
+    <section id="skills" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
       <SectionHead num="03 — Skills" title="Toolbox" />
-      <div className="grid md:grid-cols-3 gap-4 mt-10">
+      <div className="grid md:grid-cols-3 gap-4 mt-8">
         {skills.map((s, i) => (
           <Reveal key={s.title} delay={i * 0.07} className={i === 0 ? "md:col-span-2" : ""}>
             <div className="h-full rounded-2xl border border-[var(--line)] bg-[var(--card)] p-7 transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)]">

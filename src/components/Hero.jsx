@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motio
 import Clock from "./Clock";
 import Magnetic from "./Magnetic";
 import CountUp from "./CountUp";
+import { useReady } from "./LoaderContext";
 
 const ease = [0.22, 1, 0.36, 1];
 const roles = ["Front-End Developer", "Next.js Developer", "Full-Stack Builder"];
@@ -38,6 +39,8 @@ function RoleRotator() {
 }
 
 export default function Hero() {
+  const ready = useReady();
+
   const mx = useMotionValue(-500);
   const my = useMotionValue(-500);
   const sx = useSpring(mx, { stiffness: 60, damping: 20 });
@@ -71,12 +74,12 @@ export default function Hero() {
         className="pointer-events-none absolute left-0 top-0 h-[400px] w-[400px] rounded-full bg-[var(--accent)] opacity-10 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-6xl px-6 pt-10 md:pt-16 pb-20 md:pb-24">
+      <div className="relative mx-auto max-w-6xl px-6 pt-8 md:pt-12 pb-12 md:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={ready ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.6, ease }}
-          className="flex flex-wrap items-center gap-3 font-tag text-xs text-[var(--muted)] mb-7"
+          className="flex flex-wrap items-center gap-3 font-tag text-xs text-[var(--muted)] mb-6"
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--card)] px-3 py-1.5">
             <span className="relative flex h-2 w-2">
@@ -96,8 +99,8 @@ export default function Hero() {
               <motion.span
                 className="block"
                 initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.15 + i * 0.12, ease }}
+                animate={ready ? { y: 0 } : undefined}
+                transition={{ duration: 0.9, delay: 0.1 + i * 0.12, ease }}
               >
                 {line}
               </motion.span>
@@ -107,8 +110,8 @@ export default function Hero() {
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6, ease }}
+          animate={ready ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.7, delay: 0.5, ease }}
           className="mt-6 max-w-xl text-lg text-[var(--muted)] leading-relaxed"
         >
           I&apos;m a <RoleRotator /> from Karachi, working with React.js and Next.js,
@@ -118,9 +121,9 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.75, ease }}
-          className="mt-9 flex flex-wrap gap-4"
+          animate={ready ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.7, delay: 0.65, ease }}
+          className="mt-8 flex flex-wrap gap-4"
         >
           <Magnetic>
             <a
@@ -143,9 +146,9 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-[var(--line)] pt-6"
+          animate={ready ? { opacity: 1 } : undefined}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-[var(--line)] pt-6"
         >
           {stats.map((s) => (
             <div key={s.label}>

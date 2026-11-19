@@ -29,7 +29,7 @@ export default function Preloader() {
 
     let cancelled = false;
     const controls = animate(0, 100, {
-      duration: reduce ? 0.6 : 2.2,
+      duration: 1.6,
       ease: [0.65, 0, 0.35, 1],
       onUpdate: (v) => setCount(Math.round(v)),
       onComplete: async () => {

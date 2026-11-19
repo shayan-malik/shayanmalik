@@ -59,7 +59,7 @@ export default function CaseStudy() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="ml-3 font-tag text-[11px] text-white/50">checkout.sql (simplified)</span>
+              <span className="ml-3 font-tag text-[11px] text-white/50">checkout flow (illustrative example)</span>
             </div>
             <pre className="overflow-x-auto p-6 font-tag text-xs md:text-sm leading-7">
               {code.map((l, i) => (

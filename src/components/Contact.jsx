@@ -30,11 +30,11 @@ export default function Contact() {
     "w-full rounded-xl border border-[var(--line)] bg-[var(--card)] px-4 py-3 text-sm outline-none focus:border-[var(--accent)] transition-colors";
 
   return (
-    <section id="contact" className="bg-[var(--ink)] text-[var(--bg)]">
-      <div className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+    <section id="contact" className="bg-[var(--dark)] text-[var(--on-dark)]">
+      <div className="mx-auto max-w-6xl px-6 section-y">
         <SectionHead num="05 — Contact" title="Contact" />
 
-        <div className="grid md:grid-cols-2 gap-14 mt-8">
+        <div className="grid md:grid-cols-2 gap-14">
           <Reveal>
             <h3 className="font-display text-5xl md:text-7xl leading-[1.02]">
               Let&apos;s build something <span className="text-[var(--accent)]">together.</span>

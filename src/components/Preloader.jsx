@@ -4,16 +4,20 @@ import { motion, animate } from "framer-motion";
 import { useSetReady } from "./LoaderContext";
 
 const ease = [0.76, 0, 0.24, 1];
-const READY_DELAY = 450; // ms: curtain khulne ke kitni der baad website animations start hon
-const NAME = "Shayan Malik".split("");
+const READY_DELAY = 650; // ms: shutters khulne ke dauran website animations start hon
+const WORDS = ["Design", "Develop", "Deploy", "Shayan Malik"];
+const LINE = 1.2; // em, har word ki line height
 
 export default function Preloader() {
   const setReady = useSetReady();
   const [count, setCount] = useState(0);
   const [phase, setPhase] = useState("loading"); // loading | exit | gone
 
+  const index = Math.min(WORDS.length - 1, Math.floor(count / (100 / WORDS.length)));
+
   // counter + real loading wait
   useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -24,13 +28,13 @@ export default function Preloader() {
     const fonts = document.fonts?.ready ?? Promise.resolve();
     const resources = Promise.race([
       Promise.all([loaded, fonts]),
-      new Promise((r) => setTimeout(r, 6000)), // safety cap
+      new Promise((r) => setTimeout(r, 5000)), // safety cap
     ]);
 
     let cancelled = false;
     const controls = animate(0, 100, {
-      duration: 1.6,
-      ease: [0.65, 0, 0.35, 1],
+      duration: reduce ? 0.5 : 1.4,
+      ease: "linear",
       onUpdate: (v) => setCount(Math.round(v)),
       onComplete: async () => {
         await resources;
@@ -44,12 +48,15 @@ export default function Preloader() {
     };
   }, []);
 
-  // scroll lock
+  // scroll lock (scrollbar-gutter ki wajah se layout nahi hilta)
   useEffect(() => {
-    if (phase === "gone") return;
-    document.documentElement.style.overflow = "hidden";
+    if (phase !== "loading") return;
+    const html = document.documentElement;
+    html.style.overflow = "hidden";
+    html.classList.add("is-loading");
     return () => {
-      document.documentElement.style.overflow = "";
+      html.style.overflow = "";
+      html.classList.remove("is-loading");
     };
   }, [phase]);
 
@@ -57,7 +64,7 @@ export default function Preloader() {
   useEffect(() => {
     if (phase !== "exit") return;
     const t1 = setTimeout(() => setReady(true), READY_DELAY);
-    const t2 = setTimeout(() => setPhase("gone"), 1400);
+    const t2 = setTimeout(() => setPhase("gone"), 1300);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -70,101 +77,130 @@ export default function Preloader() {
 
   return (
     <div className="preloader fixed inset-0 z-[100]" aria-hidden="true">
-      {/* back layer (accent) */}
+      {/* shutters (thora overlap taake beech me line na dikhe) */}
       <motion.div
-        className="absolute inset-0 bg-[var(--accent)]"
+        className="absolute inset-x-0 top-0 h-[51%] bg-[var(--dark)]"
         animate={{ y: exiting ? "-100%" : 0 }}
-        transition={{ duration: 0.9, delay: exiting ? 0.12 : 0, ease }}
+        transition={{ duration: 0.75, delay: exiting ? 0.35 : 0, ease }}
+      />
+      <motion.div
+        className="absolute inset-x-0 bottom-0 h-[51%] bg-[var(--dark)]"
+        animate={{ y: exiting ? "100%" : 0 }}
+        transition={{ duration: 0.75, delay: exiting ? 0.35 : 0, ease }}
       />
 
-      {/* front layer (dark) */}
+      {/* accent line jo exit pe phailti hai */}
       <motion.div
-        className="absolute inset-0 bg-[var(--ink)] text-[var(--bg)]"
-        animate={{ y: exiting ? "-100%" : 0 }}
-        transition={{ duration: 0.9, ease }}
+        className="absolute left-0 right-0 top-1/2 z-20 h-[2px] -translate-y-1/2 origin-center bg-[var(--accent)]"
+        initial={{ scaleX: 0, opacity: 1 }}
+        animate={exiting ? { scaleX: 1, opacity: 0 } : { scaleX: 0, opacity: 1 }}
+        transition={{
+          scaleX: { duration: 0.4, ease },
+          opacity: { delay: 0.4, duration: 0.25 },
+        }}
+      />
+
+      {/* content */}
+      <motion.div
+        className="absolute inset-0 z-10 text-[var(--on-dark)]"
+        animate={exiting ? { opacity: 0, scale: 1.04 } : { opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <div className="relative flex h-full w-full flex-col justify-between p-6 md:p-10">
-          {/* top row */}
-          <div className="flex justify-between font-tag text-[11px] uppercase tracking-[0.2em] text-white/50">
-            <span>Portfolio</span>
-            <span>Karachi, PK</span>
-          </div>
+        {/* grid background */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            WebkitMaskImage: "radial-gradient(ellipse at center, #000 10%, transparent 70%)",
+            maskImage: "radial-gradient(ellipse at center, #000 10%, transparent 70%)",
+          }}
+        />
 
-          {/* center */}
-          <div className="flex flex-col items-center text-center">
-            <motion.svg
-              width="76"
-              height="76"
-              viewBox="0 0 32 32"
-              fill="none"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <rect width="32" height="32" rx="9" fill="#F6F2EA" />
-              <motion.path
-                d="M22 7.5H14A4.5 4.5 0 0 0 14 16.5H18A4.5 4.5 0 0 1 18 25.5H10"
-                stroke="#1A1A1A"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.3, ease: "easeInOut", delay: 0.2 }}
-              />
-              <motion.circle
-                cx="25.5"
-                cy="25.5"
-                r="1.8"
-                fill="#E4572E"
-                style={{ transformBox: "fill-box", transformOrigin: "center" }}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 1.3, type: "spring", stiffness: 400, damping: 12 }}
-              />
-            </motion.svg>
+        {/* glow */}
+        <div className="absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2">
+          <motion.div
+            className="h-full w-full rounded-full bg-[var(--accent)] opacity-20 blur-3xl"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
 
-            <div className="mt-8 flex overflow-hidden pb-1 font-display text-4xl md:text-6xl">
-              {NAME.map((ch, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.35 + i * 0.045, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-block"
-                >
-                  {ch === " " ? "\u00A0" : ch}
-                </motion.span>
-              ))}
-            </div>
+        {/* corners */}
+        <div className="absolute inset-x-0 top-0 flex justify-between p-6 font-tag text-[11px] uppercase tracking-[0.2em] text-white/50 md:p-10">
+          <span>Portfolio</span>
+          <span>Karachi, PK</span>
+        </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              className="mt-3 font-tag text-[11px] uppercase tracking-[0.25em] text-white/50"
-            >
-              Front-End &amp; Full-Stack Developer
-            </motion.p>
-          </div>
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 font-tag text-[11px] uppercase tracking-[0.2em] text-white/50 md:p-10">
+          <span className="tabular-nums">{String(count).padStart(3, "0")}%</span>
+          <span className="hidden sm:block">Front-End &amp; Full-Stack Developer</span>
+        </div>
 
-          {/* bottom row */}
-          <div className="flex items-end justify-between">
-            <span className="font-display text-7xl md:text-9xl leading-none tabular-nums">
-              {String(count).padStart(2, "0")}
-            </span>
-            <span className="mb-2 font-tag text-[11px] uppercase tracking-[0.2em] text-white/50">
-              Loading experience
-            </span>
-          </div>
-
-          {/* progress line */}
-          <div className="absolute inset-x-0 bottom-0 h-[3px] bg-white/10">
-            <div
-              className="h-full origin-left bg-[var(--accent)]"
-              style={{ transform: `scaleX(${count / 100})` }}
+        {/* center */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
+          <motion.svg
+            width="60"
+            height="60"
+            viewBox="0 0 32 32"
+            fill="none"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <rect width="32" height="32" rx="9" fill="#F6F2EA" />
+            <motion.path
+              d="M22 7.5H14A4.5 4.5 0 0 0 14 16.5H18A4.5 4.5 0 0 1 18 25.5H10"
+              stroke="#1A1A1A"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.8, ease: "easeInOut", delay: 0.1 }}
             />
+            <motion.circle
+              cx="25.5"
+              cy="25.5"
+              r="1.8"
+              fill="#E4572E"
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 400, damping: 12 }}
+            />
+          </motion.svg>
+
+          <span className="mt-8 font-tag text-[11px] uppercase tracking-[0.25em] text-white/40 tabular-nums">
+            0{index + 1} / 0{WORDS.length}
+          </span>
+
+          {/* slot-machine word window */}
+          <div
+            className="mt-3 overflow-hidden font-display text-[clamp(2.5rem,9vw,6rem)]"
+            style={{ height: `${LINE}em`, lineHeight: `${LINE}em` }}
+          >
+            <motion.div
+              animate={{ y: `${(-index * 100) / WORDS.length}%` }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {WORDS.map((w) => (
+                <div key={w} className="whitespace-nowrap text-center" style={{ height: `${LINE}em` }}>
+                  {w}
+                  <span className="text-[var(--accent)]">.</span>
+                </div>
+              ))}
+            </motion.div>
           </div>
+        </div>
+
+        {/* progress line */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-white/10">
+          <div
+            className="h-full origin-left bg-[var(--accent)]"
+            style={{ transform: `scaleX(${count / 100})` }}
+          />
         </div>
       </motion.div>
     </div>

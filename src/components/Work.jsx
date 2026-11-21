@@ -5,16 +5,24 @@ import { projects } from "@/lib/data";
 
 export default function Work() {
   return (
-    <section id="work" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+    <section id="work" className="mx-auto max-w-6xl px-6 section-t">
       <SectionHead num="02 — Work" title="Selected Work" />
 
       {projects.map((p, i) => {
-        const img = p.image || `https://image.thum.io/get/width/1200/crop/800/${p.live}`; // temporary screenshot
+        const img =
+          p.image || `https://image.thum.io/get/width/1200/crop/800/${p.live}`; // temporary screenshot
         const host = p.live.replace(/^https?:\/\//, "");
 
         return (
-          <Reveal key={p.title} className="border-b border-[var(--line)] last:border-0">
-            <article className="grid md:grid-cols-12 gap-8 md:gap-12 py-8 md:py-10">
+          <Reveal
+            key={p.title}
+            className="border-b border-[var(--line)] last:border-0"
+          >
+            <article
+              className={`grid md:grid-cols-12 gap-8 md:gap-12 ${
+                i === 0 ? "pt-0" : "pt-8 md:pt-10"
+              } ${i === projects.length - 1 ? "pb-0" : "pb-8 md:pb-10"}`}
+            >
               <div className={`md:col-span-7 ${i % 2 ? "md:order-2" : ""}`}>
                 <Tilt>
                   <a
@@ -22,19 +30,23 @@ export default function Work() {
                     target="_blank"
                     rel="noreferrer"
                     className={`group relative block overflow-hidden rounded-2xl border border-[var(--line)] shadow-[0_24px_50px_-28px_rgba(0,0,0,0.35)] ${
-                      p.dark ? "bg-[#0d0d0d]" : "bg-white"
+                      p.dark ? "bg-[#0d0d0d]" : "bg-[var(--card)]"
                     }`}
                   >
                     {/* browser bar */}
                     <div
                       className={`flex items-center gap-1.5 border-b px-4 py-3 ${
-                        p.dark ? "border-white/10 bg-[#161616]" : "border-[var(--line)] bg-[var(--card)]"
+                        p.dark
+                          ? "border-white/10 bg-[#161616]"
+                          : "border-[var(--line)] bg-[var(--card)]"
                       }`}
                     >
                       <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                      <span className="ml-3 truncate font-tag text-[11px] text-[var(--muted)]">{host}</span>
+                      <span className="ml-3 truncate font-tag text-[11px] text-[var(--muted)]">
+                        {host}
+                      </span>
                     </div>
 
                     <div className="overflow-hidden">
@@ -58,8 +70,12 @@ export default function Work() {
                 <span className="font-tag text-xs text-[var(--accent)]">
                   {String(i + 1).padStart(2, "0")} / {p.type}
                 </span>
-                <h3 className="font-display text-4xl md:text-5xl mt-2 mb-4">{p.title}</h3>
-                <p className="text-[var(--muted)] leading-relaxed">{p.description}</p>
+                <h3 className="font-display text-4xl md:text-5xl mt-2 mb-4">
+                  {p.title}
+                </h3>
+                <p className="text-[var(--muted)] leading-relaxed">
+                  {p.description}
+                </p>
 
                 <ul className="flex flex-wrap gap-2 mt-6">
                   {p.tags.map((t) => (

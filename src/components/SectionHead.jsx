@@ -5,7 +5,7 @@ const ease = [0.22, 1, 0.36, 1];
 
 export default function SectionHead({ num, title }) {
   return (
-    <div className="mb-4">
+    <div className="mb-8 md:mb-10">
       <div className="flex items-end justify-between pb-4">
         <div className="overflow-hidden py-1">
           <motion.h2

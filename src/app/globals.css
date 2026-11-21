@@ -6,8 +6,41 @@
   --ink: #1a1a1a;
   --muted: #6b6b6b;
   --line: #e3ddd0;
-  --accent: #e4572e; /* terracotta. Blue chahiye to #2d5bff */
+  --accent: #e4572e;
+  /* hamesha dark rehne wali surfaces (loader, contact, footer, skill tiles) */
+  --dark: #1a1a1a;
+  --on-dark: #f6f2ea;
+  color-scheme: light;
 }
+
+html[data-theme="dark"] {
+  --bg: #121110;
+  --card: #1a1917;
+  --ink: #f1ede4;
+  --muted: #a09b90;
+  --line: #2c2a26;
+  --accent: #ff6a3d;
+  --dark: #0a0a09;
+  --on-dark: #f1ede4;
+  color-scheme: dark;
+}
+
+/* Theme badalte waqt smooth color transition */
+html.theme-transition *:not(.theme-icon) {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease,
+    fill 0.4s ease, stroke 0.4s ease !important;
+}
+
+/* Toggle icon (sun <-> moon) */
+.theme-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+.theme-icon-moon { transform: rotate(-90deg) scale(0.4); opacity: 0; }
+html[data-theme="dark"] .theme-icon-sun { transform: rotate(90deg) scale(0.4); opacity: 0; }
+html[data-theme="dark"] .theme-icon-moon { transform: none; opacity: 1; }
 
 html {
   scroll-behavior: smooth;
@@ -73,4 +106,23 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .blob, .marquee-track, .spin-slow { animation: none; }
+}
+
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html.is-loading {
+  background: var(--dark);
+}
+
+.section-y {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.section-t {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+.section-b {
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }

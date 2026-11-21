@@ -10,15 +10,10 @@ const facts = [
 
 export default function About() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+    <section id="about" className="mx-auto max-w-6xl px-6 section-t">
       <SectionHead num="01 — About" title="About me" />
-      <div className="grid md:grid-cols-12 gap-12 mt-8">
+      <div className="grid md:grid-cols-12 gap-12">
         <Reveal className="md:col-span-4">
-          {/* Photo lagani ho to /public/me.jpg rakho aur is div ko <img src="/me.jpg" className="h-full w-full object-cover rounded-2xl" /> se replace karo */}
-          {/* <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)] flex items-center justify-center">
-            <div className="spin-slow absolute inset-10 rounded-full border border-dashed border-[var(--accent)]" />
-            <span className="font-display text-8xl text-[var(--accent)]">SM</span>
-          </div> */}
           <img src="/me.png" className="h-full w-full object-cover rounded-2xl" />
         </Reveal>
 

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import Magnetic from "./Magnetic";
 import { useReady } from "./LoaderContext";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { id: "about", label: "About" },
@@ -85,6 +86,7 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
+           <ThemeToggle />
           <Magnetic strength={0.25}>
             <a
               href="#contact"

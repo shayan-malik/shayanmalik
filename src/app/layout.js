@@ -22,9 +22,19 @@ export const metadata = {
   },
 };
 
+// Sirf tab dark lagta hai jab user ne khud dark choose kiya ho. Warna hamesha light.
+const themeScript = `try{if(localStorage.getItem("theme")==="dark"){document.documentElement.setAttribute("data-theme","dark")}}catch(e){}`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <noscript>
           <style>{`.preloader{display:none!important}`}</style>

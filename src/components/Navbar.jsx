@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import Magnetic from "./Magnetic";
-import { useReady } from "./LoaderContext";
 import ThemeToggle from "./ThemeToggle";
+import { useReady } from "./LoaderContext";
 
 const links = [
   { id: "about", label: "About" },
@@ -44,6 +44,13 @@ export default function Navbar() {
     return () => obs.disconnect();
   }, []);
 
+  // desktop size par jaate hi mobile menu band
+  useEffect(() => {
+    const onResize = () => window.innerWidth >= 768 && setOpen(false);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -51,16 +58,16 @@ export default function Navbar() {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
         scrolled || open
-          ? "bg-[var(--bg)]/85 backdrop-blur-md border-[var(--line)]"
+          ? "bg-[var(--bg)]/90 backdrop-blur-md border-[var(--line)]"
           : "bg-transparent border-transparent"
       }`}
     >
-      <nav className="mx-auto max-w-6xl px-6 h-[72px] flex items-center justify-between">
-        <a href="#" aria-label="Home">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 md:h-[72px]">
+        <a href="#" aria-label="Home" className="min-w-0 shrink">
           <Logo />
         </a>
 
-        <ul className="hidden md:flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--card)]/70 p-1 text-sm">
+        <ul className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--card)]/70 p-1 text-sm md:flex">
           {links.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} className="relative block rounded-full px-4 py-1.5">
@@ -85,21 +92,26 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
-           <ThemeToggle />
-          <Magnetic strength={0.25}>
-            <a
-              href="#contact"
-              className="block text-sm rounded-full bg-[var(--accent)] text-white px-5 py-2.5 hover:opacity-90 transition"
-            >
-              Hire me
-            </a>
-          </Magnetic>
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+
+          {/* Hire me: sirf sm+ screens par. Mobile par menu ke andar hai */}
+          <div className="hidden sm:block">
+            <Magnetic strength={0.25}>
+              <a
+                href="#contact"
+                className="block rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm text-white transition hover:opacity-90"
+              >
+                Hire me
+              </a>
+            </Magnetic>
+          </div>
 
           <button
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            className="md:hidden relative h-10 w-10 rounded-full border border-[var(--line)] bg-[var(--card)]"
+            aria-expanded={open}
+            className="relative h-10 w-10 shrink-0 rounded-full border border-[var(--line)] bg-[var(--card)] md:hidden"
           >
             <span
               className={`absolute left-1/2 top-1/2 h-[1.5px] w-4 -translate-x-1/2 bg-[var(--ink)] transition-transform duration-300 ${
@@ -122,20 +134,29 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden border-t border-[var(--line)]"
+            className="overflow-hidden border-t border-[var(--line)] md:hidden"
           >
-            <ul className="px-6 py-4">
+            <ul className="px-4 py-3 sm:px-6">
               {links.map((l) => (
                 <li key={l.id}>
                   <a
                     href={`#${l.id}`}
                     onClick={() => setOpen(false)}
-                    className="block py-3 font-display text-3xl border-b border-[var(--line)] last:border-0"
+                    className="block border-b border-[var(--line)] py-3.5 font-display text-2xl"
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
+              <li className="pb-2 pt-4">
+                <a
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  className="block rounded-full bg-[var(--accent)] py-3 text-center text-sm font-medium text-white"
+                >
+                  Hire me
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

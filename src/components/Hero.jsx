@@ -93,7 +93,7 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        <h1 className="font-display text-[clamp(2.5rem,7vw,5.75rem)] leading-[1.02]">
+        <h1 className="font-display text-[clamp(2.2rem,7vw,5.75rem)] leading-[1.02]">
           {lines.map((line, i) => (
             <span key={i} className="block overflow-hidden pb-[0.12em]">
               <motion.span
@@ -155,7 +155,7 @@ export default function Hero() {
               <div className="font-display text-4xl md:text-5xl">
                 <CountUp to={s.n} />
               </div>
-              <div className="mt-1 font-tag text-[11px] uppercase tracking-wider text-[var(--muted)]">
+              <div className="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-[var(--line)] pt-6 md:gap-6">
                 {s.label}
               </div>
             </div>

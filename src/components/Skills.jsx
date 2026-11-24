@@ -203,7 +203,7 @@ export default function Skills() {
         <div className="h-[2px] w-full bg-[var(--line)]">
           <motion.div
             key={layer.key}
-            className="h-full origin-left bg-[var(--accent)]"
+            className="min-w-0 p-5 md:p-8"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.6, ease }}
@@ -227,7 +227,7 @@ export default function Skills() {
               <p className="max-w-md text-sm text-[var(--muted)]">{layer.desc}</p>
             </div>
 
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+            <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
               {layer.items.map((it, i) => (
                 <motion.li
                   key={it.n}
@@ -235,10 +235,10 @@ export default function Skills() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ delay: i * 0.04, duration: 0.35, ease }}
                   whileHover={{ y: -4 }}
-                  className="flex cursor-default items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 transition-colors hover:border-[var(--accent)]"
+                  className="min-w-0 flex cursor-default items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 transition-colors hover:border-[var(--accent)]"
                 >
                   <Logo item={it} size={28} />
-                  <span className="text-sm leading-tight">{it.n}</span>
+                  <span className="text-sm leading-tight break-words">{it.n}</span>
                 </motion.li>
               ))}
             </ul>

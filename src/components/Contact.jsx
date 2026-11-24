@@ -36,13 +36,14 @@ export default function Contact() {
 
         <div className="grid md:grid-cols-2 gap-14">
           <Reveal>
-            <h3 className="font-display text-5xl md:text-7xl leading-[1.02]">
-              Let&apos;s build something <span className="text-[var(--accent)]">together.</span>
+            <h3 className="font-display text-4xl sm:text-5xl md:text-7xl leading-[1.02]">
+              Let&apos;s build something{" "}
+              <span className="text-[var(--accent)]">together.</span>
             </h3>
             <ul className="mt-10 space-y-3 text-sm">
               <li>
                 <a
-                  className="hover:text-[var(--accent)]"
+                  className="link-underline break-all hover:text-[var(--accent)]"
                   href={`mailto:${profile.email}`}
                 >
                   ✉ {profile.email}

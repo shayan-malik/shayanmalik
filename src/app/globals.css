@@ -168,3 +168,6 @@ html.is-loading {
 html[data-theme="dark"] .logo-mono {
   filter: invert(1);
 }
+
+html, body { max-width: 100%; }
+body { overflow-x: clip; } /* hidden nahi, clip: sticky navbar nahi tootta */

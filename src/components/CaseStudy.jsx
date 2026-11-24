@@ -196,7 +196,7 @@ export default function CaseStudy() {
 
         <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
           {/* timeline */}
-          <div className="lg:col-span-6">
+          <div className="min-w-0 lg:col-span-6">
             <div className="mb-8 flex flex-wrap items-center gap-2">
               {["PostgreSQL", "SQL Transactions", "Node.js", "Express.js"].map((t) => (
                 <span
@@ -254,7 +254,7 @@ export default function CaseStudy() {
 
           {/* simulator */}
           <motion.div
-            className="lg:sticky lg:top-24 lg:col-span-6"
+            className="min-w-0 lg:sticky lg:top-24 lg:col-span-6"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}

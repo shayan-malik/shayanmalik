@@ -9,7 +9,7 @@ export default function SectionHead({ num, title }) {
       <div className="flex items-end justify-between pb-4">
         <div className="overflow-hidden py-1">
           <motion.h2
-            className="font-display text-4xl md:text-6xl"
+            className="font-display text-3xl sm:text-4xl md:text-6xl"
             initial={{ y: "110%" }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
@@ -19,7 +19,7 @@ export default function SectionHead({ num, title }) {
           </motion.h2>
         </div>
         <motion.span
-          className="font-tag text-sm text-[var(--accent)]"
+          className="hidden shrink-0 font-tag text-sm text-[var(--accent)] sm:block"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

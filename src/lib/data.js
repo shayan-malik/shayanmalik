@@ -76,7 +76,7 @@ export const skills = [
   { title: "Frontend", items: ["React.js", "Next.js", "Vite", "Tailwind CSS", "React Router", "TanStack Query", "Recharts", "SEO"] },
   { title: "Backend", items: ["Node.js", "Express.js", "REST APIs", "JWT", "Google OAuth", "bcrypt", "RBAC"] },
   { title: "Database", items: ["PostgreSQL", "MongoDB", "SQL Transactions", "Firebase Firestore"] },
-  { title: "Languages", items: ["JavaScript (ES6+)", "TypeScript (Basic)", "HTML5", "CSS3", "SQL"] },
+  { title: "Languages", items: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "SQL"] },
   { title: "Tools", items: ["Git", "GitHub", "Vercel", "Neon", "Firebase", "Cloudinary", "Resend", "Axios", "Postman", "VS Code"] },
 ];
 

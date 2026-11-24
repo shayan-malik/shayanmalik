@@ -126,3 +126,45 @@ html.is-loading {
 .section-b {
   padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }
+
+
+/* Skills: flow dots */
+.flow-dot {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: flow-y 1.6s linear infinite;
+}
+@keyframes flow-y {
+  0% { top: 0; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+@media (min-width: 768px) {
+  .flow-dot {
+    left: 0;
+    top: 50%;
+    margin-left: 0;
+    margin-top: -3.5px;
+    animation-name: flow-x;
+  }
+}
+@keyframes flow-x {
+  0% { left: 0; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-dot { animation: none; opacity: 0; }
+}
+
+/* Black logos (Next.js, Express, GitHub, Vercel) dark theme me invert */
+html[data-theme="dark"] .logo-mono {
+  filter: invert(1);
+}

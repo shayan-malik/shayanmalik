@@ -1,13 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import Clock from "./Clock";
 import Magnetic from "./Magnetic";
 import CountUp from "./CountUp";
 import { useReady } from "./LoaderContext";
 
 const ease = [0.22, 1, 0.36, 1];
-const roles = ["Front-End Developer", "Next.js Developer", "Full-Stack Builder"];
+const roles = [
+  "Front-End Developer",
+  "Next.js Developer",
+  "Full-Stack Builder",
+];
 const stats = [
   { n: 5, label: "Live projects" },
   { n: 3, label: "Databases used" },
@@ -53,9 +62,12 @@ export default function Hero() {
   }
 
   const lines = [
-    <span key="1" className="text-[var(--muted)]">Hi, I&apos;m Shayan.</span>,
+    <span key="1" className="text-[var(--muted)]">
+      Hi, I&apos;m Shayan.
+    </span>,
     <span key="2">
-      I build fast <span className="text-[var(--accent)]">front-ends</span>
+      I build fast{" "}
+      <span className="whitespace-nowrap text-[var(--accent)]">front-ends</span>
     </span>,
     <span key="3">&amp; full-stack products.</span>,
   ];
@@ -114,9 +126,9 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.5, ease }}
           className="mt-6 max-w-xl text-lg text-[var(--muted)] leading-relaxed"
         >
-          I&apos;m a <RoleRotator /> from Karachi, working with React.js and Next.js,
-          backed by Node.js, Express and PostgreSQL. I turn ideas into deployed,
-          real-world apps.
+          I&apos;m a <RoleRotator /> from Karachi, working with React.js and
+          Next.js, backed by Node.js, Express and PostgreSQL. I turn ideas into
+          deployed, real-world apps.
         </motion.p>
 
         <motion.div

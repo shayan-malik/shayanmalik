@@ -112,7 +112,7 @@ function Connector() {
   return (
     <div
       aria-hidden
-      className="relative mx-auto h-8 w-px shrink-0 bg-[var(--line)] md:mx-0 md:h-px md:w-10 md:self-center"
+      className="relative mx-auto h-5 w-px shrink-0 bg-[var(--line)] md:mx-0 md:h-px md:w-10 md:self-center"
     >
       <span className="flow-dot" />
     </div>
@@ -151,20 +151,26 @@ export default function Skills() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease }}
                 whileHover={{ y: -4 }}
-                className={`relative flex-1 rounded-3xl border p-5 text-left transition-colors duration-300 ${
+                className={`relative flex-1 rounded-3xl border p-4 md:p-5 text-left transition-colors duration-300 ${
                   on
                     ? "border-[var(--accent)] bg-[var(--card)] shadow-[0_20px_40px_-24px_var(--accent)]"
                     : "border-[var(--line)] bg-[var(--card)]/60 hover:border-[var(--accent)]"
                 }`}
               >
                 <div className="flex items-center justify-between font-tag text-[11px] uppercase tracking-[0.18em]">
-                  <span className={on ? "text-[var(--accent)]" : "text-[var(--muted)]"}>
+                  <span
+                    className={
+                      on ? "text-[var(--accent)]" : "text-[var(--muted)]"
+                    }
+                  >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[var(--muted)]">{l.items.length} tools</span>
+                  <span className="text-[var(--muted)]">
+                    {l.items.length} tools
+                  </span>
                 </div>
 
-                <div className="mt-6 flex h-8 items-center">
+                <div className="mt-4 md:mt-6 flex h-8 items-center">
                   {logos.length ? (
                     logos.map((it, k) => (
                       <span
@@ -175,11 +181,15 @@ export default function Skills() {
                       </span>
                     ))
                   ) : (
-                    <span className="font-tag text-xs text-[var(--muted)]">{"</>"}</span>
+                    <span className="font-tag text-xs text-[var(--muted)]">
+                      {"</>"}
+                    </span>
                   )}
                 </div>
 
-                <h3 className="mt-4 font-display text-2xl md:text-3xl">{l.label}</h3>
+                <h3 className="mt-3 md:mt-4 font-display text-2xl md:text-3xl">
+                  {l.label}
+                </h3>
                 <p className="mt-1 font-tag text-[11px] uppercase tracking-wider text-[var(--muted)]">
                   {l.tag}
                 </p>
@@ -203,7 +213,7 @@ export default function Skills() {
         <div className="h-[2px] w-full bg-[var(--line)]">
           <motion.div
             key={layer.key}
-            className="min-w-0 p-5 md:p-8"
+            className="min-w-0 p-4 sm:p-5 md:p-8"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.6, ease }}
@@ -224,10 +234,12 @@ export default function Skills() {
                 {layer.label}
                 <span className="text-[var(--accent)]">.</span>
               </h4>
-              <p className="max-w-md text-sm text-[var(--muted)]">{layer.desc}</p>
+              <p className="max-w-md text-sm text-[var(--muted)]">
+                {layer.desc}
+              </p>
             </div>
 
-            <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4">
               {layer.items.map((it, i) => (
                 <motion.li
                   key={it.n}
@@ -235,10 +247,12 @@ export default function Skills() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ delay: i * 0.04, duration: 0.35, ease }}
                   whileHover={{ y: -4 }}
-                  className="min-w-0 flex cursor-default items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-4 py-3.5 transition-colors hover:border-[var(--accent)]"
+                  className="flex min-w-0 cursor-default flex-col items-start gap-2 rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-3.5 py-3 transition-colors hover:border-[var(--accent)] sm:flex-row sm:items-center sm:gap-3 sm:px-4 sm:py-3.5"
                 >
                   <Logo item={it} size={28} />
-                  <span className="text-sm leading-tight break-words">{it.n}</span>
+                  <span className="min-w-0 text-[13px] leading-tight [overflow-wrap:anywhere] sm:text-sm">
+                    {it.n}
+                  </span>
                 </motion.li>
               ))}
             </ul>

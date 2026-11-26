@@ -73,7 +73,7 @@ export default function Hero() {
   ];
 
   return (
-    <section onMouseMove={onMove} className="relative overflow-hidden">
+    <section id="home" onMouseMove={onMove} className="relative overflow-hidden">
       {/* background layers */}
       <div aria-hidden className="dot-grid absolute inset-0" />
       <div

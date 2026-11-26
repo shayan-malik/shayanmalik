@@ -10,6 +10,7 @@ import { profile } from "@/lib/data";
 const ease = [0.22, 1, 0.36, 1];
 
 const links = [
+  { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "work", label: "Work" },
   { id: "skills", label: "Skills" },
@@ -18,34 +19,40 @@ const links = [
 
 export default function Navbar() {
   const ready = useReady();
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState("home");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-      if (window.scrollY < 300) setActive("");
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const ids = ["home", "about", "work", "skills", "case-study", "contact"];
+  let raf = 0;
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        }),
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    [...links.map((l) => l.id), "contact"].forEach((id) => {
+  const update = () => {
+    raf = 0;
+    setScrolled(window.scrollY > 10);
+
+    const line = window.innerHeight * 0.4;
+    let current = "home";
+    for (const id of ids) {
       const el = document.getElementById(id);
-      if (el) obs.observe(el);
-    });
-    return () => obs.disconnect();
-  }, []);
+      if (el && el.getBoundingClientRect().top <= line) current = id;
+    }
+    setActive(current);
+  };
+
+  const onScroll = () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    if (raf) cancelAnimationFrame(raf);
+  };
+}, []);
 
   // menu khula ho to scroll lock + Escape se band
 useEffect(() => {
@@ -69,14 +76,13 @@ useEffect(() => {
 
   // mobile menu link: pehle menu band + scroll unlock, phir smooth scroll
   function goTo(e, id) {
-    e.preventDefault();
-    setOpen(false);
-    setTimeout(() => {
-      document
-        .getElementById(id)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 120);
-  }
+  e.preventDefault();
+  setOpen(false);
+  setTimeout(() => {
+    if (id === "home") window.scrollTo({ top: 0, behavior: "smooth" });
+    else document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 120);
+}
 
   return (
     <>

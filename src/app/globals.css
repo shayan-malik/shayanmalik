@@ -25,11 +25,14 @@ html[data-theme="dark"] {
   color-scheme: dark;
 }
 
-/* Theme badalte waqt smooth color transition */
-html.theme-transition *:not(.theme-icon) {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease,
-    fill 0.4s ease, stroke 0.4s ease !important;
+/* Theme switch: circle reveal */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
 
 /* Toggle icon (sun <-> moon) */
 .theme-icon {

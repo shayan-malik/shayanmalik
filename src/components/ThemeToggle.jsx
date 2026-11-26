@@ -1,19 +1,48 @@
 "use client";
 
 export default function ThemeToggle() {
-  function toggle() {
+  function toggle(e) {
     const root = document.documentElement;
     const next = root.dataset.theme === "dark" ? "light" : "dark";
 
-    root.classList.add("theme-transition");
-    if (next === "dark") root.dataset.theme = "dark";
-    else root.removeAttribute("data-theme");
+    const apply = () => {
+      if (next === "dark") root.dataset.theme = "dark";
+      else root.removeAttribute("data-theme");
+      try {
+        localStorage.setItem("theme", next);
+      } catch {}
+    };
 
-    try {
-      localStorage.setItem("theme", next);
-    } catch {}
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || reduce) {
+      apply();
+      return;
+    }
 
-    setTimeout(() => root.classList.remove("theme-transition"), 450);
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const y = r.top + r.height / 2;
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const t = document.startViewTransition(apply);
+    t.ready.then(() => {
+      root.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${radius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 650,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
   }
 
   return (

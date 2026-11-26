@@ -38,7 +38,7 @@ export default function Navbar() {
         entries.forEach((e) => {
           if (e.isIntersecting) setActive(e.target.id);
         }),
-      { rootMargin: "-40% 0px -55% 0px" }
+      { rootMargin: "-40% 0px -55% 0px" },
     );
     [...links.map((l) => l.id), "contact"].forEach((id) => {
       const el = document.getElementById(id);
@@ -50,11 +50,14 @@ export default function Navbar() {
   // menu khula ho to scroll lock + Escape se band
   useEffect(() => {
     if (!open) return;
-    document.documentElement.style.overflow = "hidden";
+    const html = document.documentElement;
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     const onKey = (e) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => {
-      document.documentElement.style.overflow = "";
+      html.style.overflow = "";
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -71,7 +74,9 @@ export default function Navbar() {
     e.preventDefault();
     setOpen(false);
     setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 120);
   }
 
@@ -85,24 +90,36 @@ export default function Navbar() {
           open
             ? "bg-[var(--bg)] border-[var(--line)]"
             : scrolled
-            ? "bg-[var(--bg)]/90 backdrop-blur-md border-[var(--line)]"
-            : "bg-transparent border-transparent"
+              ? "bg-[var(--bg)]/90 backdrop-blur-md border-[var(--line)]"
+              : "bg-transparent border-transparent"
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 md:h-[72px]">
-          <a href="#" aria-label="Home" className="min-w-0 shrink" onClick={() => setOpen(false)}>
+          <a
+            href="#"
+            aria-label="Home"
+            className="min-w-0 shrink"
+            onClick={() => setOpen(false)}
+          >
             <Logo />
           </a>
 
           <ul className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--card)]/70 p-1 text-sm md:flex">
             {links.map((l) => (
               <li key={l.id}>
-                <a href={`#${l.id}`} className="relative block rounded-full px-4 py-1.5">
+                <a
+                  href={`#${l.id}`}
+                  className="relative block rounded-full px-4 py-1.5"
+                >
                   {active === l.id && (
                     <motion.span
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-full bg-[var(--ink)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                   <span
@@ -164,32 +181,34 @@ export default function Navbar() {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[var(--bg)] px-6 pb-8 pt-24 md:hidden"
+            className="fixed inset-x-0 top-0 z-40 flex h-dvh flex-col overflow-y-auto overflow-x-hidden overscroll-contain bg-[var(--bg)] px-6 pb-6 pt-20 md:hidden"
           >
-            {/* soft glow */}
+            {/* soft glow (alag wrapper me, taake sideways scroll na bane) */}
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-[var(--accent)] opacity-15 blur-3xl"
-            />
+              className="pointer-events-none absolute inset-0 overflow-hidden"
+            >
+              <div className="absolute -right-24 top-24 h-64 w-64 rounded-full bg-[var(--accent)] opacity-15 blur-3xl" />
+            </div>
 
             <ul className="relative">
               {links.map((l, i) => (
                 <motion.li
                   key={l.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.07, duration: 0.5, ease }}
+                  transition={{ delay: 0.2 + i * 0.06, duration: 0.5, ease }}
                 >
                   <a
                     href={`#${l.id}`}
                     onClick={(e) => goTo(e, l.id)}
-                    className="flex items-baseline gap-4 border-b border-[var(--line)] py-4"
+                    className="flex items-baseline gap-3 border-b border-[var(--line)] py-3"
                   >
-                    <span className="font-tag text-xs text-[var(--accent)]">
+                    <span className="font-tag text-[11px] text-[var(--accent)]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
-                      className={`font-display text-4xl transition-colors ${
+                      className={`font-display text-3xl transition-colors ${
                         active === l.id ? "text-[var(--accent)]" : ""
                       }`}
                     >
@@ -203,28 +222,34 @@ export default function Navbar() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55, duration: 0.5, ease }}
-              className="relative mt-auto pt-10"
+              transition={{ delay: 0.5, duration: 0.5, ease }}
+              className="relative mt-auto pt-8"
             >
               <a
                 href="#contact"
                 onClick={(e) => goTo(e, "contact")}
-                className="block rounded-full bg-[var(--accent)] py-3.5 text-center text-sm font-medium text-white"
+                className="block rounded-full bg-[var(--accent)] py-3 text-center text-sm font-medium text-white"
               >
                 Hire me
               </a>
 
               <a
                 href={`mailto:${profile.email}`}
-                className="mt-6 block break-all font-tag text-xs text-[var(--muted)]"
+                className="mt-5 block break-all font-tag text-[11px] text-[var(--muted)]"
               >
                 {profile.email}
               </a>
 
-              <div className="mt-3 flex gap-5 font-tag text-xs uppercase tracking-wider">
-                <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-                <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
-                <a href={profile.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
+              <div className="mt-2 flex gap-4 font-tag text-[11px] uppercase tracking-wider">
+                <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                  LinkedIn
+                </a>
+                <a href={profile.github} target="_blank" rel="noreferrer">
+                  GitHub
+                </a>
+                <a href={profile.whatsapp} target="_blank" rel="noreferrer">
+                  WhatsApp
+                </a>
               </div>
             </motion.div>
           </motion.div>

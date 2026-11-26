@@ -48,19 +48,17 @@ export default function Navbar() {
   }, []);
 
   // menu khula ho to scroll lock + Escape se band
-  useEffect(() => {
-    if (!open) return;
-    const html = document.documentElement;
-    html.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => {
-      html.style.overflow = "";
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+useEffect(() => {
+  if (!open) return;
+  const html = document.documentElement;
+  html.style.overflow = "hidden";
+  const onKey = (e) => e.key === "Escape" && setOpen(false);
+  window.addEventListener("keydown", onKey);
+  return () => {
+    html.style.overflow = "";
+    window.removeEventListener("keydown", onKey);
+  };
+}, [open]);
 
   // desktop size par jaate hi menu band
   useEffect(() => {
